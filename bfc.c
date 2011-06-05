@@ -32,7 +32,7 @@ static const char bfc_usage[] = "bfc [options] ... <file>\n"
                                 " -S       " "   " "Compile only; do not assemble or link\n"
                                 " -c       " "   " "Compile and assemble, but do not link\n"
                                 " -o <file>" "   " "Write output to file\n"
-                                " -s <size>" "   " "Allocate specified number of 32-bit bytes\n"
+                                " -s <size>" "   " "Allocate specified number of bytes\n"
                                 " -h       " "   " "Display this help and exit\n";
 
 enum stage
@@ -48,7 +48,7 @@ struct info_t
   char *in_filename;       /* BF source code file name */
   char *out_filename;      /* Object code file name */
   enum stage target;       /* Final stage that generates the object code */
-  unsigned int cells_size; /* Number of 32-bit bytes allocated as memory */
+  unsigned int cells_size; /* Number of bytes allocated as memory */
 };
 
 int setup_info(info_t *info, int argc, char **argv);
@@ -63,7 +63,7 @@ void error(const char *err, ...);
  */
 int main(int argc, char **argv)
 {
-  int long cells_size = 4096;    /* Default number of allocated 32-bit bytes */
+  int long cells_size = 4096;    /* Default number of allocated bytes */
   char *asm_filename;            /* Name of assembly code file */
   char *obj_filename;            /* Name of object code file */
   char *bin_filename = "a.out";  /* Default name of binary file (e.g. ELF file) */
@@ -202,7 +202,7 @@ void compile(const info_t *info, const char *asm_filename, const char *src_filen
   /* Write IA-32 assembly code */
   fprintf(as, ".intel_syntax noprefix\n");
 
-  /* Allocate info->cells_size zeroed 32-bit bytes */
+  /* Allocate info->cells_size zeroed bytes */
   fprintf(as, ".section .bss\n");
   fprintf(as, "\t.lcomm cells, %u\n", info->cells_size);
 
