@@ -212,7 +212,7 @@ void compile(const info_t *info, const char *asm_filename, const char *src_filen
   fprintf(as, "_start:\n");
 
   /* Assign BSS address to EDI register */
-  fprintf(as, "\tmov edi, OFFSET cells\n");
+  fprintf(as, "\tlea edi, cells\n");
   while ((c = fgetc(src)) != EOF) {
     switch (c) {
     case '>':
